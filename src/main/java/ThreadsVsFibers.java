@@ -11,8 +11,8 @@ public class ThreadsVsFibers {
 	public static void main(String[] args) throws InterruptedException {
 		int n = 10000;
 		while (true) {
-			measure(() -> withThreads(n, ThreadsVsFibers::compute, ThreadsVsFibers::store), "Threads");
 			measure(() -> withFibers(n, ThreadsVsFibers::compute, ThreadsVsFibers::store), "Fibers");
+			measure(() -> withThreads(n, ThreadsVsFibers::compute, ThreadsVsFibers::store), "Threads");
 		}
 	}
 
@@ -41,7 +41,7 @@ public class ThreadsVsFibers {
 		System.out.printf("%s: %dms%n", name, (t1 - t0) / 1000000);
 	}
 
-	private static void withThreads(int n, Supplier<Integer> compute, final Consumer<Integer> store) {
+	private static void withThreads(int n, Supplier<Integer> compute, Consumer<Integer> store) {
 		try {
 			Thread[] threads = new Thread[n];
 			for (int i = 0; i < n; i++) {
